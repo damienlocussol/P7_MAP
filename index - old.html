@@ -1,0 +1,93 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Compiled and minified CSS -->
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  		<link rel="stylesheet" href="extras/noUislider/nouislider.css">
+  		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+
+    </head>
+
+    <body>
+    	<div class="row content-global">
+    		<div class="col s12 m6 l4 xl3 blue content-left">
+    			<header class="col s12 nav-wrapper">
+          			<h1 class="logo valign-wrapper"><i class="medium material-icons">restaurant</i>&nbsp;hungry</h1>
+      			</header>
+<!--       			<section class="col s12 content-user green">
+      				<nav>
+					    <div class="nav-wrapper">
+					      <form>
+					        <div class="input-field">
+					          <input id="search" type="search" required>
+					          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+					          <i class="material-icons">close</i>
+					        </div>
+					      </form>
+					    </div>
+					</nav>
+      			</section>
+      			<section class="col s12 content-user green">
+      				<button class="btn waves-effect waves-light" name="action">Ajouter un restaurant
+    					<i class="material-icons right">add</i>
+  					</button>
+      			</section> -->
+      			<section class="col s12 content-user green">
+      				<p>Restaurant entre X et Y étoiles</p>
+      				<div id="star-slider"></div>
+      			</section>
+      			<section class="col s12 orange box-list">
+	      			<div class="preloader-wrapper small active">
+					    <div class="spinner-layer spinner-blue-only">
+					    	<div class="circle-clipper left">
+					        	<div class="circle"></div>
+					      	</div>
+					      	<div class="gap-patch">
+					        	<div class="circle"></div>
+					      	</div>
+					      	<div class="circle-clipper right">
+					        	<div class="circle"></div>
+					      	</div>
+					    </div>
+					</div>
+					<div class="content-list"></div>
+      			</section>
+    		</div>
+    		<div class="col s12 m6 l4 xl3 box-resto">
+    			<div class="col s12 yellow box-details close-box-details">
+    		</div>
+    		
+    		</div>
+
+    		<div class="col s12 m6 l8 xl9 red content-right">
+    			<div id="map"></div>
+    		</div>
+    	</div>
+
+
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Ydz_yqt5tbLhldq07FJ8S8P81-xv5XI"></script>
+
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <!-- Compiled and minified JavaScript -->
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  		<script src="extras/noUislider/nouislider.min.js"></script>
+  		<script src="extras/noUislider/wNumb.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/request.js"></script>
+        <script src="js/display.js"></script>
+
+    </body>
+</html>
