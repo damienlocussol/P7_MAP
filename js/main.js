@@ -31,7 +31,7 @@ var website = website || {};
 			privates.setStars();	
 			privates.setInterface();
 			privates.setMenu();
-			// privates.initDatas();
+			privates.initDatas();
 			privates.initialize = true;
 		}									 
 	};	
@@ -43,7 +43,7 @@ var website = website || {};
 	privates.initMap = function(usrPos){
 
 		privates.map = new google.maps.Map(document.getElementById('map'), {
-	    	zoom: 5,
+	    	zoom: 10,
 	    	disableDefaultUI: true,
 	    	mapTypeId: google.maps.MapTypeId.ROADMAP,
 	    	center : usrPos
@@ -52,6 +52,7 @@ var website = website || {};
 	  	privates.setUsrMarker(usrPos, privates.map);
 
 	  	privates.map.addListener('idle', function(){
+	  		$('.overlay-preloader').fadeIn();
 	  		website.request.getRestos(privates.map, privates.star);
   		});
 
@@ -62,6 +63,7 @@ var website = website || {};
 
 	privates.centerMap = function(usrPos){
 		privates.map.setCenter(usrPos);
+		$('.overlay-preloader').fadeIn();
 		website.request.getRestos(privates.map, privates.star);
 	};
 
@@ -165,8 +167,11 @@ var website = website || {};
 
 
 		$('.get-star').on('click', function(e){
+			$('.overlay-preloader').fadeIn();
 			website.request.getRestos(privates.map, privates.star);
 			$('.nb-star').text(privates.star);
+			var many = privates.star > 1 ? ' étoiles' : ' étoile';
+			$('.many-star').text(many);
 		});
 
 		$('.valid').on('click', function(e){
@@ -188,6 +193,10 @@ var website = website || {};
 	
 		// });
 		// $(window).on('resize', function(){
+			$('.infoWindow').on('click', function(){
+				console.log('eeeee');
+			});
+
 
 		if (privates.setDeviceWidth()) {
 
@@ -205,20 +214,24 @@ var website = website || {};
 
 		});
 
+		$('a.close-btn-info').on('click', function(){
+			$('.resto-info').removeClass('active-info-resto');
+			$('.box-container').removeClass('active-box');	
+		});
 
 	};
 
-	// privates.initDatas = function(){
-	// 	$.getJSON("datas/list.json",{_: new Date().getTime()}).done(function(data){
-	// 		var dataJSON = JSON.stringify(data);
-	// 		if(typeof localStorage!='undefined') {
-	// 			privates.storage = true;
-	// 			localStorage.setItem('listRestos', dataJSON);
-	// 		} else {
- //  				console.log("localStorage n'est pas supporté");
-	// 		}
-	// 	});
-	// };
+	privates.initDatas = function(){
+		$.getJSON("datas/list.json",{_: new Date().getTime()}).done(function(data){
+			var dataJSON = JSON.stringify(data);
+			if(typeof localStorage!='undefined') {
+				privates.storage = true;
+				localStorage.setItem('listRestos', dataJSON);
+			} else {
+  				console.log("localStorage n'est pas supporté");
+			}
+		});
+	};
 
 	
 }(website));

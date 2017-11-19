@@ -7,47 +7,12 @@
 		height : 70px;
 		overflow: hidden;
 		transition : height 1s;
+		box-shadow: none;
 
 		header {
 			display: none;
 		}
 
-		nav {
-
-			height : 0px!important;
-
-			.menu{
-				position : fixed;
-				top : 20px;
-				left : 20px;  
-
-				> a{
-					background-color: transparent!important;
-				}
-
-				.add-star{
-					top : -48px;
-
-					input,
-					input:focus
-					input:active,
-					input:hover,
-					input:visited {
-						top : -8px;
-					}
-
-					.add-restaurant-btn{
-						top : -8px;
-					}
-				}
-
-				.icon-menu:before{
-					content : "more_vert";
-				}
-			}
-
-
-		}
 
 		.content-chip{
 			display: none;
@@ -68,11 +33,35 @@
 		}
 	}
 
+	.menu-position {
+
+		height : 0px!important;
+
+		.menu{
+			position : fixed;
+			top : 20px;
+			left : 20px;  
+
+			> a {
+				background-color: transparent!important;
+			}
+
+			ul.floating-menu{
+				top : 0px;
+			}
+
+			.add-star{
+				top : -40px;
+			}
+
+			.icon-menu:before{
+				content : "more_vert";
+			}
+		}
+	}
+
 	.box-container{
-		left : -100%!important;
 		height : 100vh;
-		overflow : visible;
-		z-index: 510;
 	}
 
 	.up-content-content{

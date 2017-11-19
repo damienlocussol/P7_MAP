@@ -43,56 +43,54 @@ var website = website || {};
 
 	publics.displayMarkerRestos = function(markers, map){
 		for(var i = 0 ; i < markers.length ; i++){
-			// if( privates.ratingsAvg(markers[i].datas.ratings) >= star ){
-				if(markers[i].getMap() === null){
-					markers[i].setAnimation(google.maps.Animation.DROP);
-					markers[i].setMap(map);
-				}
-			// }
+			if(markers[i].getMap() === null){
+				markers[i].setAnimation(google.maps.Animation.DROP);
+				markers[i].setMap(map);
+			}
 		}
+
 	};
 
 
 	publics.displayListRestos = function(markers, map){
 		var list = $('.content-list').html('');
-		var listByStar = [];
+		// var listByStar = [];
 
 		// $('.preloader-wrapper').css('display', 'block');
-		for(var i = 0 ; i < markers.length ; i++){
+		// for(var i = 0 ; i < markers.length ; i++){
 
-			// if( privates.ratingsAvg(markers[i].datas.ratings) >= star ){
-				listByStar.push({
-					rName : markers[i].datas.restaurantName,
-					rRates : markers[i].avgStar,
-					rAdress : markers[i].datas.address
-				});
-			// }
-		}
+		// 	listByStar.push({
+		// 		datas.restaurantName : markers[i].datas.restaurantName,
+		// 		star.avg : markers[i].star.avg,
+		// 		position : markers[i].position,
+		// 		datas.address : markers[i].datas.address
+		// 		// rId : markers[i].number
+		// 	});
+		// }
 
-		listByStar.sort(function(a,b){
-			return b.rRates - a.rRates;
+		// listByStar.sort(function(a,b){
+		// 	return b.rRates - a.rRates;
+		// });
+
+		markers.sort(function(a,b){
+			return b.star.avg - a.star.avg;
 		});
 
-		for(var i = 0, len = listByStar.length ; i < len ; i++){
-			list.append('<p class="resto-title-list"><a class="black-text" id="' + i + '" href="#"> '+listByStar[i].rName+'</a> \
-						<span class="valign-wrapper right">'+listByStar[i].rRates+'&nbsp;<i class="resto-star material-icons '+privates.starColor(listByStar[i].rRates)+'-text">grade</i></span></p> \
-				 		 <p class="adress-list brown-text text-lighten-1">'+listByStar[i].rAdress+'</p>');
+		for(var i = 0, len = markers.length ; i < len ; i++){
+			list.append('<p class="resto-title-list"><a class="black-text" id="' + i + '" href="#"> '+markers[i].datas.restaurantName+'</a> \
+						 <span class="valign-wrapper right">'+markers[i].star.avg+'&nbsp;<i class="resto-star material-icons '+privates.starColor(markers[i].star.avg)+'-text">grade</i></span></p> \
+				 		 <p class="adress-list brown-text text-lighten-1">'+markers[i].datas.address+'</p>');
 
 			$('#'+i).on('click', function(e){	
+				$('.overlay-preloader').fadeIn();
 				e.preventDefault();		
-				privates.displayResto(listByStar, e.target.id, map);
+				$('#street-view').html('');
+				publics.displayResto(markers[$(this).attr('id')]);
 			});
 		};
-	};
 
-	// privates.ratingsAvg = function(ratings){
-	// 	var ratingsSum = 0;
-	// 	var ratingsNb = ratings.length;
-	// 	for(var i = 0 ; i < ratingsNb ; i++){
-	// 		ratingsSum += ratings[i].stars;
-	// 	}
-	// 	return ratingsSum / ratingsNb;
-	// };
+		$('.overlay-preloader').fadeOut();
+	};
 
 	privates.starColor = function(rates){
 		var sC = 'green';
@@ -118,69 +116,41 @@ var website = website || {};
 		return sC;
 	};
 
-	privates.displayResto = function(list, e, map){
+	publics.displayResto = function(list){
 
- 		// var panorama = new google.maps.StreetViewPanorama(
-	  //     	document.getElementById('street-view'), {
-	  //       position: {lat: 40.729559, lng: -73.990741},
-	  //       pov: {
-	  //         heading: 34,
-	  //         pitch: 10
-	  //       }
-   //    	});
-  	// 	map.setStreetView(panorama);
+		var posLat = list.position.lat();
+		var posLng = list.position.lng();
+  		// var urlTest = "https://maps.googleapis.com/maps/api/streetview/metadata?size=400x300&location="+posLat+","+posLng+"&key=AIzaSyBRttRz16dbN0k9hR_zwJKg_F5IC3xZ7E0";
+  		var urlImg = "https://maps.googleapis.com/maps/api/streetview?size=600x400&location="+posLat+","+posLng+"&fov=90&pitch=0&key=AIzaSyBRttRz16dbN0k9hR_zwJKg_F5IC3xZ7E0";
+		
+		var img = $('<img src="'+urlImg+'">');
 
-  		var urll = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&fov=90&heading=235&pitch=10&key=AIzaSyBRttRz16dbN0k9hR_zwJKg_F5IC3xZ7E0";
+		img.on('load', function(){
+			 
+			$('#street-view').html(img);
+			$('.resto-info').addClass('active-info-resto');	
+			$('.box-container').addClass('active-box');	
+		});
 
+    	$('.resto-title').text(list.datas.restaurantName);
+		$('.resto-adress').text(list.datas.address);
+		$('.nb-star-resto').text(list.star.avg);
+		$('.nb-notice').text(list.star.nb);
+		// $('.nb-star').text(list.star.avg);
 
-	// 	var contentResto = $('#contentResto'); 
-	// 	var infosResto = $('#infosResto');
-	// 	var contentNotice = $('#contentNotice');
-
-		// var detailsResto = $('.resto-title');
-
-		$('#street-view').append('<img class="street-img" src="'+ urll+'" alt="">');
-
-		$('.resto-title').text(list[e].rName);
-		$('.resto-adress').text(list[e].rAdress);
-		$('.nb-star').text(list[e].rRates);
-
-		$('.resto-comment').text("commentssssssssssssss");
-
-
-
-		$('.resto-info').css('left', '100%');
-
-		// detailsResto.html('').append('<p>'+list[e].rName+'</p><a href="#!" class="secondary-content btn-close"><i class="material-icons">close</i></a>');
-
-
-		// detailsResto.removeClass('close-box-details').addClass('open-box-details');
-
-		// $('.btn-close').on('click', function(){
-		// 	detailsResto.removeClass('open-box-details').addClass('close-box-details');
-		// });
-
-	// 	contentResto.html('').append('<p>'+markers[e].datas.restaurantName+'</p>');
-	// 	infosResto.css('display', 'block');
-	// 	contentNotice.css('display', 'none');
-
-	// 	$('#close').on('click', function(){
-	// 		infosResto.css('display', 'none');
-	// 	});
-
-	// 	$('#addNotice').on('click', function(){
-	// 		contentNotice.css('display', 'block');
-	// 	});
-
-	// 	$('#addNoticeToResto').on('submit', function(e){
-	// 		e.preventDefault();
-	// 		contentNotice.css('display', 'none');
-	// 	});
-
+		for(var i = 0 , len = list.datas.ratings.length ; i < len ; i++){
+			$('.resto-comment').append('<div class="comment"> \
+											<img src="datas/avatar.jpg" alt="profile"> \
+											<p class="comment-star">'+ list.datas.ratings[i].stars +'</p> \
+											<p class="comment-comment">'+ list.datas.ratings[i].comment +'</p> \
+										</div>');
+			if(i < len-1){
+				$('.resto-comment').append('<div class="divider"></div>');	
+			}
+			
+		}
+		
+		$('.overlay-preloader').fadeOut();
 	};
 
 })(website.display = {});
-
-// $(document).ready(function(){
-// 	website.display.init();
-// });

@@ -5,6 +5,7 @@ var website = website || {};
 	var privates = {};
 
 	privates.markers = [];
+	privates.infoWindow;
 
 	publics.getRestos = function(map, star){
   	// $.getJSON("datas/list.json",{_: new Date().getTime()}).done(function(data){
@@ -22,9 +23,9 @@ var website = website || {};
 			var isInMarkers = privates.checkIsInMarkers(locationRestaurant);
 			var nbStar = privates.ratingsAvg(el.ratings);
 
-			if(!isInMarkers && isInside && nbStar >= star){
-				privates.markers.push(publics.addMarker(map, locationRestaurant, icon, el, nbStar));
-			}else if(isInMarkers && ( !isInside || nbStar < star)){
+			if(!isInMarkers && isInside && nbStar.avg >= star){
+				privates.markers.push(publics.addMarker(map, locationRestaurant, icon, el, nbStar, idx));
+			}else if(isInMarkers && ( !isInside || nbStar.avg < star)){
 				privates.removeMarker(locationRestaurant);
 			}
 
@@ -56,21 +57,50 @@ var website = website || {};
 		for(var i = 0 ; i < ratingsNb ; i++){
 			ratingsSum += ratings[i].stars;
 		}
-		return ratingsSum / ratingsNb;
+		var rates = { nb : ratingsNb, avg : (ratingsSum / ratingsNb) };
+
+		if(!Number.isInteger(rates.avg)){
+			rates.avg = rates.avg.toFixed(1);
+		}
+
+		// rates.avg = rates.avg.toFixed(1)
+// console.log(rates.avg.toFixed(1));
+
+
+		return rates;
 	};
 
-	publics.addMarker = function(map, position, image, el, nbStar){
+	publics.addMarker = function(map, position, image, el, nbStar, idx){
+		
 		var marker = new google.maps.Marker({
 	    	position: position,
 	    	map : null,
 	    	icon: image,
 	    	datas : el,
-	    	avgStar : nbStar
+	    	star : nbStar,
+	    	title : el.restaurantName
   		});
+		
+		marker.addListener('click', function(ev){
+			if(privates.infoWindow){
+				privates.infoWindow.close();
+			}
 
-		marker.addListener('click', function(){
-			console.log('marker clicked '+ marker);
+			privates.infoWindow = new google.maps.InfoWindow();
+
+			var div = document.createElement('div');
+	        div.innerHTML = el.restaurantName;
+	        div.onclick = function(){infoClick(marker)};
+	        privates.infoWindow.setContent(div);
+	        privates.infoWindow.open(map, marker);
+
+
 		});
+
+		function infoClick(marker){
+			$('.overlay-preloader').fadeIn();
+			website.display.displayResto(marker);	
+		}
 
   		return marker;
 	};

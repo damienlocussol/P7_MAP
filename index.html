@@ -24,52 +24,57 @@
     	
     <div class="row content-global">
 
+      <div class="col s12 m6 l4 xl3 menu-position">
+        <div class="fixed-action-btn menu">
+          <a class="btn-floating btn-large btn-flat red open-menu-mobile"><i class="large material-icons icon-menu"></i></a>   
+          <ul class="floating-menu">
+            <li>
+              <a class="btn-floating red"><i class="material-icons">search</i></a>
+              <div class="add-star">
+                  <input placeholder="Search" id="first_name" type="text" class="black-text">
+                  <label for="first_name"></label>
+                  <a class="btn-floating red menu-valid valid search-input"><i class="material-icons">add</i></a>
+              </div>
+            </li>
+            <li>
+              <a class="btn-floating yellow darken-1"><i class="material-icons">star</i></a>
+              <div class="add-star">
+                  <p class="star-bullet star-active" data-star="1">&nbsp;</p>
+                  <p class="star-bullet star-active" data-star="2">&nbsp;</p>
+                  <p class="star-bullet star-active" data-star="3">&nbsp;</p>
+                  <p class="star-bullet star-active" data-star="4">&nbsp;</p>
+                  <p class="star-bullet star-active" data-star="5">&nbsp;</p>
+                  <a class="btn-floating red menu-valid valid get-star"><i class="material-icons">add</i></a>
+              </div>
+            </li>
+            <li>
+              <a class="btn-floating green"><i class="material-icons">add_location</i></a>
+              <div class="add-star last">
+                <a class="waves-effect center-align black-text valid add-restaurant-btn">Ajouter un restaurant</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     	<div class="col s12 m6 push-m6 l8 push-l4 xl9 push-xl3 orange content-map">
     		<div id="map"></div>
     	</div>
 
-    	<div class="col s12 m6 pull-m6 l4 pull-l8 xl3 pull-xl9 white content-content">
+      <div class="col s12 m6 pull-m6 l4 pull-l8 xl3 pull-xl9 overlay-preloader">
+        <div class="loop-content">
+          <i class="material-icons">loop</i>
+        </div>
+      </div>
 
+    	<div class="col s12 m6 pull-m6 l4 pull-l8 xl3 pull-xl9 white content-content">
     		  <header>
           		<h1 class="logo"><img src="img/logo.png" alt="spritz"></h1>
           		<div class="divider"></div>
       		</header>
       		
-      		<nav class="white">
-      			<div class="fixed-action-btn menu">
-      				<a class="btn-floating btn-large btn-flat red open-menu-mobile"><i class="large material-icons icon-menu"></i></a>   
-  				    <ul class="floating-menu">
-  				      <li>
-  				      	<a class="btn-floating red"><i class="material-icons">search</i></a>
-  				      	<div class="add-star">
-            					<input placeholder="Search" id="first_name" type="text" class="black-text">
-            					<label for="first_name"></label>
-            					<a class="btn-floating red menu-valid valid search-input"><i class="material-icons">add</i></a>
-          				</div>
-  				      </li>
-  				      <li>
-  				      	<a class="btn-floating yellow darken-1"><i class="material-icons">star</i></a>
-  				      	<div class="add-star">
-  					      		<p class="star-bullet" data-star="1">&nbsp;</p>
-  					      		<p class="star-bullet" data-star="2">&nbsp;</p>
-  					      		<p class="star-bullet" data-star="3">&nbsp;</p>
-  					      		<p class="star-bullet" data-star="4">&nbsp;</p>
-  					      		<p class="star-bullet" data-star="5">&nbsp;</p>
-  					      		<a class="btn-floating red menu-valid valid get-star"><i class="material-icons">add</i></a>
-  				      	</div>
-  				      </li>
-  				      <li>
-  				      	<a class="btn-floating green"><i class="material-icons">add_location</i></a>
-  				      	<div class="add-star last">
-  				      		<a class="waves-effect center-align black-text valid add-restaurant-btn">Ajouter un restaurant</a>
-  				      	</div>
-  				      </li>
-  				    </ul>
-				    </div>
-      		</nav>
-
       		<div class="content-chip">
-      			<div class="chip"><span class="nb-star">3</span> étoiles</div>
+      			<div class="chip"><span class="nb-star">1</span><span class="many-star"> étoile</span></div>
       			<div class="chip"><span>50</span>km</div>
       			<div class="divider"></div>
       		</div>
@@ -78,16 +83,16 @@
       			<div class="list-display valign-wrapper"><p><a id="display-list" href="#">Afficher la liste</a></p></div>
       			<div class="content-list"></div>
       		</div>
-      
     	</div>
 
-      <div class="col s12 m6 pull-m6 l4 pull-l8 xl3 pull-xl9 yellow content-content box-container">
+      <div class="col s12 m6 pull-m6 l4 pull-l8 xl3 pull-xl9 content-content box-container">
         <div class="resto-container white resto-info">
+          <a class="close-btn-info" href="#"><i class="material-icons right black-text">close</i></a>
           <div id="street-view"></div>
           <div id="resto-content">
             <p class="resto-title"></p>
             <p class="resto-adress"></p>
-            <p class="nb-star">&nbsp;<i class="material-icons">grade</i> (<span>47</span> avis)</p>
+            <p><span class="nb-star-resto"></span><i class="material-icons">grade</i>&nbsp;(<span class="nb-notice"></span> avis)</p>
             <div class="resto-comment"></div>
           </div>
         </div>
